@@ -10,15 +10,6 @@
       "phoneNumber": "+994774708000",
       "isChangeOrNot": false
     },
-    "71936": {
-      "id": 71936,
-      "name": "test",
-      "surname": "test2",
-      "fatherName": "test3",
-      "email": "iqbal@box.az",
-      "phoneNumber": "4564",
-      "isChangeOrNot": false
-    },
     "1251": {
       "id": 1251,
       "name": "wed1ew",
@@ -44,6 +35,15 @@
       "fatherName": "Habil",
       "email": "cavid@box.az",
       "phoneNumber": "+99450505050",
+      "isChangeOrNot": false
+    },
+    "69574": {
+      "id": 69574,
+      "name": "Iqbal",
+      "surname": "Hasanli",
+      "fatherName": "AtaAdi",
+      "email": "a@gmail.com",
+      "phoneNumber": "+994505006780",
       "isChangeOrNot": false
     },
     "4585": {
@@ -80,6 +80,15 @@
       "fatherName": "adas",
       "email": "dasd@box.az",
       "phoneNumber": "+994506705569",
+      "isChangeOrNot": false
+    },
+    "25023": {
+      "id": 25023,
+      "name": "",
+      "surname": "",
+      "fatherName": "",
+      "email": "a@gmail.com",
+      "phoneNumber": "+994556705569",
       "isChangeOrNot": false
     }
   }
