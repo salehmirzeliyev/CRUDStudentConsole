@@ -72,12 +72,16 @@ public class Student {
         String surname = sc.nextLine();
         System.out.print("Please, enter student father name: ");
         String fatherName = sc.nextLine();
-        System.out.print("Please, enter student email: ");
-        String email =  sc.nextLine();
+        String email="";
+        while (true){
+            System.out.print("Please, enter student email: ");
+            email =  sc.nextLine();
+            if (checkEmail(email))
+                break;
+        }
         System.out.print("Please, enter student phone number: ");
         String phoneNumber = sc.nextLine();
-        Student newStudent = new Student((int)(Math.random()*6500),name,surname,fatherName,email,phoneNumber);
-//        allStudents.add(newStudent);
+        Student newStudent = new Student(getRandomId(),name,surname,fatherName,email,phoneNumber);
         allStudentsHashMapName.put((newStudent.getName()+newStudent.getId()),newStudent);
         allStudentsHashMapID.put((newStudent.getId()),newStudent);
         allStudentsHashMapFather.put((newStudent.getFatherName()+newStudent.getId()),newStudent);
@@ -284,4 +288,22 @@ public class Student {
         return false;
     }
 
+    int getRandomId(){
+        int rId = (int)(Math.random()*100000);
+        boolean isExist = allStudentsHashMapID.containsKey(rId);
+        if(isExist){
+            getRandomId();
+        }
+        return rId;
+    }
+
+    boolean checkEmail(String email){
+        Pattern pattern = Pattern.compile("[a-zA-z|\\\\.|\\d]+@[a-zA-Z|\\\\.]+|[a-zA-Z]");
+        Matcher matcher = pattern.matcher(email);
+        if (!matcher.matches()){
+            System.out.println("Please, enter correct email!!!");
+            return matcher.matches();
+        }
+        return matcher.matches();
+    }
 }
