@@ -92,8 +92,9 @@ public class Student {
         System.out.println("Enter student id");
         String id = scanner.next();
         if(!checkDigit(id)){
-            System.out.println("Enter only digit!!");
+            System.out.println("Enter correct digit!!");
             updateStudent();
+            return;
         }
         Student findStudent = allStudentsHashMapID.get(Integer.parseInt(id));
         if (findStudent!=null){
@@ -143,7 +144,7 @@ public class Student {
         System.out.println("Enter student id");
         String id = scanner.next();
         if(!checkDigit(id)){
-            System.out.println("Enter only digit!!");
+            System.out.println("Enter correct digit!!");
             removeStudent();
         }
         Student findStudent = allStudentsHashMapID.get(Integer.parseInt(id));
@@ -185,14 +186,14 @@ public class Student {
                     String name = scanner.nextLine();
                     Stream<Map.Entry<String, Student>> searchResult = allStudentsHashMapName.entrySet().stream().filter(w->w.getKey().toLowerCase().startsWith(name.toLowerCase()));
                     long numberOf = allStudentsHashMapName.keySet().stream().filter(w->w.toLowerCase().startsWith(name.toLowerCase())).count();
-                    getStudents(searchResult,numberOf);
+                    getStudentsForSearching(searchResult,numberOf);
                     break;
                 case 3:
                     System.out.println("Enter student's father name");
                     String fatherName = scanner.nextLine();
                     Stream<Map.Entry<String, Student>> searchRes = allStudentsHashMapFather.entrySet().stream().filter(w->w.getKey().toLowerCase().startsWith(fatherName.toLowerCase()));
                     long numOf = allStudentsHashMapFather.keySet().stream().filter(w->w.toLowerCase().startsWith(fatherName.toLowerCase())).count();
-                    getStudents(searchRes,numOf);
+                    getStudentsForSearching(searchRes,numOf);
                     break;
                 default:
                     searchStudent();
@@ -201,7 +202,7 @@ public class Student {
         }
     }
 
-    public void getStudents(Stream<Map.Entry<String, Student>> searchResult,long numberOf){
+    public void getStudentsForSearching(Stream<Map.Entry<String, Student>> searchResult,long numberOf){
         if (numberOf!=0){
             for (Map.Entry<String, Student> ss: searchResult.collect(Collectors.toList())){
                 System.out.println("-------------");
@@ -241,33 +242,46 @@ public class Student {
         }
     }
 
+    boolean isChangeOrNot;
+
     boolean isChange(){
         Scanner scanner = new Scanner(System.in);
         String entered = scanner.nextLine();
         if (!checkDigit(entered)){
             System.out.println("Please, enter correct option!!");
             isChange();
+            if (isChangeOrNot){
+                return true;
+            }
+            else return false;
         }
         else {
             int enteredInt = Integer.parseInt(entered);
             if (enteredInt==1){
-               return true;
+                isChangeOrNot = true;
+                return true;
             }else if(enteredInt==2){
+                isChangeOrNot = false;
                 return false;
             }
             else {
                 System.out.println("Please, enter correct option!!");
                 isChange();
-
+                if (isChangeOrNot){
+                    return true;
+                }
+                else return false;
             }
         }
-        return false;
     }
 
     boolean checkDigit(String scan){
         Pattern pattern = Pattern.compile("[0-9]+");
         Matcher matcher = pattern.matcher(scan);
-        return matcher.matches();
+        if (scan.length()<9&&matcher.matches()==true){
+            return true;
+        }
+        return false;
     }
 
 }

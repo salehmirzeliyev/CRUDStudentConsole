@@ -1,29 +1,14 @@
 {
   "id": 0,
   "students": {
-    "1234": {
-      "id": 1234,
-      "name": "Javid Aliyev",
-      "surname": "Aliyev2",
-      "fatherName": "Habil",
-      "email": "cavid@box.az",
-      "phoneNumber": "+99450505050"
-    },
-    "5555": {
-      "id": 5555,
-      "name": "HgbalCorrect",
-      "surname": "HasanliCorrect",
-      "fatherName": "Zahid",
-      "email": "iqbal.hoff@list.ru",
-      "phoneNumber": "+994774708000"
-    },
-    "2323": {
-      "id": 2323,
-      "name": "Jeyhun",
-      "surname": "Memmedov",
-      "fatherName": "Eli",
-      "email": "jeyhunu@box.az",
-      "phoneNumber": "+99450505050"
+    "1251": {
+      "id": 1251,
+      "name": "wed1ew",
+      "surname": "wedew",
+      "fatherName": "fefewf",
+      "email": "wefewf",
+      "phoneNumber": "ewf",
+      "isChangeOrNot": false
     },
     "4469": {
       "id": 4469,
@@ -31,7 +16,8 @@
       "surname": "Hasanli",
       "fatherName": "Zahid",
       "email": "iqbal.hoff@list.ru",
-      "phoneNumber": "+994506705569"
+      "phoneNumber": "+994506705569",
+      "isChangeOrNot": false
     },
     "4646": {
       "id": 4646,
@@ -39,7 +25,8 @@
       "surname": "Bagirli",
       "fatherName": "Habil",
       "email": "cavid@box.az",
-      "phoneNumber": "+99450505050"
+      "phoneNumber": "+99450505050",
+      "isChangeOrNot": false
     },
     "4585": {
       "id": 4585,
@@ -47,7 +34,8 @@
       "surname": "Hasanli",
       "fatherName": "Zahid",
       "email": "iqbal.hoff@list.ru",
-      "phoneNumber": "+994506705569"
+      "phoneNumber": "+994506705569",
+      "isChangeOrNot": false
     },
     "4588": {
       "id": 4588,
@@ -55,7 +43,8 @@
       "surname": "Hasanli",
       "fatherName": "Zahid",
       "email": "iqbal.hoff@list.ru",
-      "phoneNumber": "+994506705569"
+      "phoneNumber": "+994506705569",
+      "isChangeOrNot": false
     },
     "8477": {
       "id": 8477,
@@ -63,7 +52,8 @@
       "surname": "Hasanli",
       "fatherName": "Zahid",
       "email": "iqbal.hoff@list.ru",
-      "phoneNumber": "+994506705569"
+      "phoneNumber": "+994506705569",
+      "isChangeOrNot": false
     }
   }
 }
