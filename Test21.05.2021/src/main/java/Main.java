@@ -18,7 +18,7 @@ public class Main {
             System.out.println("2. Remove Student");
             System.out.println("3. Update Student");
             System.out.println("4. Show all students");
-            System.out.println("5. Search Student");
+            System.out.println("5. Search Student by input");
             System.out.println("6. Exit");
             System.out.print("Select option: ");
             String enterNum = scanner.nextLine();
