@@ -129,10 +129,9 @@ public class Student {
             }
             System.out.println("Do you want to change email?\n1.Yes\n2.No");
             if (isChange()){
-                System.out.print("Enter New Email: ");
                 String email =  "";
                 while (true){
-                    System.out.print("Please, enter student email: ");
+                    System.out.print("Enter New Email: ");
                     email =  scanner.next();
                     if (checkEmail(email))
                         break;
@@ -141,10 +140,9 @@ public class Student {
             }
             System.out.println("Do you want to change phone number?\n1.Yes\n2.No");
             if (isChange()){
-                System.out.print("Enter New phone: ");
                 String phoneNumber="";
                 while (true){
-                    System.out.print("Please, enter student phone number: ");
+                    System.out.print("Enter New phone: ");
                     phoneNumber =  scanner.next();
                     if (checkPhoneNumber(phoneNumber))
                         break;
@@ -183,7 +181,7 @@ public class Student {
 
     public void searchStudent(){
         Scanner scanner = new Scanner(System.in);
-        System.out.println("\n1. ID\n2. Name\n3. Father name\n");
+        System.out.println("\n1. ID\n2. Name\n3. Father name\n4. Exit");
         String entered = scanner.nextLine();
         if (checkDigit(entered)){
             int enteredInt = Integer.parseInt(entered);
@@ -217,6 +215,8 @@ public class Student {
                     long numOf = allStudentsHashMapFather.keySet().stream().filter(w->w.toLowerCase().startsWith(fatherName.toLowerCase())).count();
                     getStudentsForSearching(searchRes,numOf);
                     break;
+                case 4:
+                    return;
                 default:
                     searchStudent();
                     break;
