@@ -1,13 +1,69 @@
 {
   "id": 0,
-  "students": [
-    {
-      "id": 1522,
-      "name": "Vusal",
-      "surname": "Azayli",
-      "fatherName": "Zohrab",
-      "email": "vusal@box.az",
-      "phoneNumber": "+994506666666"
+  "students": {
+    "1234": {
+      "id": 1234,
+      "name": "Javid Aliyev",
+      "surname": "Aliyev2",
+      "fatherName": "Habil",
+      "email": "cavid@box.az",
+      "phoneNumber": "+99450505050"
+    },
+    "5555": {
+      "id": 5555,
+      "name": "HgbalCorrect",
+      "surname": "HasanliCorrect",
+      "fatherName": "Zahid",
+      "email": "iqbal.hoff@list.ru",
+      "phoneNumber": "+994774708000"
+    },
+    "2323": {
+      "id": 2323,
+      "name": "Jeyhun",
+      "surname": "Memmedov",
+      "fatherName": "Eli",
+      "email": "jeyhunu@box.az",
+      "phoneNumber": "+99450505050"
+    },
+    "4469": {
+      "id": 4469,
+      "name": "pgbal",
+      "surname": "Hasanli",
+      "fatherName": "Zahid",
+      "email": "iqbal.hoff@list.ru",
+      "phoneNumber": "+994506705569"
+    },
+    "4646": {
+      "id": 4646,
+      "name": "Javid ",
+      "surname": "Bagirli",
+      "fatherName": "Habil",
+      "email": "cavid@box.az",
+      "phoneNumber": "+99450505050"
+    },
+    "4585": {
+      "id": 4585,
+      "name": "Zgbal2",
+      "surname": "Hasanli",
+      "fatherName": "Zahid",
+      "email": "iqbal.hoff@list.ru",
+      "phoneNumber": "+994506705569"
+    },
+    "4588": {
+      "id": 4588,
+      "name": "Janan",
+      "surname": "Hasanli",
+      "fatherName": "Zahid",
+      "email": "iqbal.hoff@list.ru",
+      "phoneNumber": "+994506705569"
+    },
+    "8477": {
+      "id": 8477,
+      "name": "Agbal76",
+      "surname": "Hasanli",
+      "fatherName": "Zahid",
+      "email": "iqbal.hoff@list.ru",
+      "phoneNumber": "+994506705569"
     }
-  ]
+  }
 }

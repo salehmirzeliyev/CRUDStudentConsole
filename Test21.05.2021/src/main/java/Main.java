@@ -24,22 +24,24 @@ public class Main {
             int enterNum = scanner.nextInt();
             switch (enterNum){
                 case 1:
-                    Student sc = new Student();
-                    sc.createStudent();
+                    Student forCreate = new Student();
+                    forCreate.createStudent();
                     break;
                 case 2:
-                    Student s = new Student();
-                    s.removeStudent();
+                    Student forRem = new Student();
+                    forRem.removeStudent();
                     break;
                 case 3:
                     Student scc = new Student();
                     scc.updateStudent();
                     break;
                 case 4:
-                    Student cs = new Student();
-                    cs.showStudents();
+                    Student forShow = new Student();
+                    forShow.showStudents();
                     break;
                 case 5:
+                    Student forSearch = new Student();
+                    forSearch.searchStudent();
                     break;
             }
         }
