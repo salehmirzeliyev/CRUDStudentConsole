@@ -8,6 +8,7 @@ import lombok.Data;
 
 import javax.swing.text.html.Option;
 import java.io.*;
+import java.lang.invoke.StringConcatFactory;
 import java.lang.reflect.Type;
 import java.util.*;
 import java.util.regex.Matcher;
@@ -19,9 +20,9 @@ import java.util.stream.Stream;
 public class Student {
 
     public static List<Student> allStudents = new ArrayList<>();
-    public  static HashMap<Integer,Student> allStudentsHashMapID = new HashMap<>();
-    public  static HashMap<String,Student> allStudentsHashMapName = new HashMap<>();
-    public  static HashMap<String,Student> allStudentsHashMapFather = new HashMap<>();
+    public static HashMap<Integer, Student> allStudentsHashMapID = new HashMap<>();
+    public static HashMap<String, Student> allStudentsHashMapName = new HashMap<>();
+    public static HashMap<String, Student> allStudentsHashMapFather = new HashMap<>();
     private int id;
     private String name;
     private String surname;
@@ -32,7 +33,7 @@ public class Student {
     public Student() {
     }
 
-    public Student(int id,String name, String surname, String fatherName, String email, String phoneNumber) {
+    public Student(int id, String name, String surname, String fatherName, String email, String phoneNumber) {
         this.id = id;
         this.name = name;
         this.surname = surname;
@@ -43,107 +44,124 @@ public class Student {
 
     @Override
     public String toString() {
-        return  "\nid: " + id +
-                "\nname: " + name  +
+        return "\nid: " + id +
+                "\nname: " + name +
                 "\nsurname: " + surname +
                 "\nfatherName: " + fatherName +
-                "\nemail:" + email+
+                "\nemail:" + email +
                 "\nphoneNumber: " + phoneNumber;
     }
 
     public void JSToOb() throws IOException {
 
         Gson gson = new Gson();
-        Type classroomType = new TypeToken<School>(){}.getType();
+        Type classroomType = new TypeToken<School>() {
+        }.getType();
         School school = gson.fromJson(new FileReader("studentJson.json"), classroomType);
-        HashMap<Integer,Student> students = school.getStudents();
-        for(Student student: students.values()){
-            allStudentsHashMapID.put(student.getId(),student);
-            allStudentsHashMapName.put((student.getName()+student.getId()),student);
-            allStudentsHashMapFather.put((student.getFatherName()+student.getId()),student);
+        HashMap<Integer, Student> students = school.getStudents();
+        for (Student student : students.values()) {
+            allStudentsHashMapID.put(student.getId(), student);
+            allStudentsHashMapName.put((student.getName() + student.getId()), student);
+            allStudentsHashMapFather.put((student.getFatherName() + student.getId()), student);
         }
     }
 
-    public  void createStudent(){
-        Scanner sc = new Scanner(System.in);
-        System.out.print("Please, enter student name: ");
-        String name = sc.nextLine();
-        System.out.print("Please, enter student surname: ");
-        String surname = sc.nextLine();
-        System.out.print("Please, enter student father name: ");
-        String fatherName = sc.nextLine();
-        String email="";
-        while (true){
-            System.out.print("Please, enter student email: ");
-            email =  sc.nextLine();
-            if (checkEmail(email))
-                break;
-        }
+    public void createStudent() {
 
-        String phoneNumber="";
-        while (true){
+        Scanner sc = new Scanner(System.in);
+        String name = getStringInput("Please, enter student name:");
+        String surname = getStringInput("Please, enter student surname:");
+        String fatherName = getStringInput("Please, enter student father name:");
+        String email = " ";
+
+        do {
+            System.out.print("Please, enter student email: ");
+            email = sc.nextLine();
+            if (isExistEmail(email)) System.out.println("This email has already taken");
+            if (!checkEmail(email)) System.out.println("Please, enter correct email!!!");
+
+        } while (!checkEmail(email) || isExistEmail(email));
+
+        String phoneNumber = "";
+        while (true) {
             System.out.print("Please, enter student phone number: ");
-            phoneNumber =  sc.nextLine();
+            phoneNumber = sc.nextLine();
             if (checkPhoneNumber(phoneNumber))
                 break;
         }
-        Student newStudent = new Student(getRandomId(),name,surname,fatherName,email,phoneNumber);
-        allStudentsHashMapName.put((newStudent.getName()+newStudent.getId()),newStudent);
-        allStudentsHashMapID.put((newStudent.getId()),newStudent);
-        allStudentsHashMapFather.put((newStudent.getFatherName()+newStudent.getId()),newStudent);
+        Student newStudent = new Student(getRandomId(), name, surname, fatherName, email, phoneNumber);
+        allStudentsHashMapName.put((newStudent.getName() + newStudent.getId()), newStudent);
+        allStudentsHashMapID.put((newStudent.getId()), newStudent);
+        allStudentsHashMapFather.put((newStudent.getFatherName() + newStudent.getId()), newStudent);
         addJson();
         System.out.print("Student: information");
         showStudent(newStudent);
         return;
     }
 
-    public void updateStudent(){
+    public static boolean isExistEmail(String email) {
+        return allStudentsHashMapID.values().stream().anyMatch(a -> a.email.equals(email));
+    }
+
+
+    public static String getStringInput(String text) {
+        String myInput;
+        do {
+            Scanner sc = new Scanner(System.in);
+            System.out.print(text);
+            myInput = sc.nextLine();
+        } while (myInput.length() == 0);
+        return myInput;
+    }
+
+    public void updateStudent() {
         Scanner scanner = new Scanner(System.in);
-        System.out.println("Enter student id");
-        String id = scanner.next();
-        if(!checkDigit(id)){
+        System.out.print("Enter student id:");
+        String id = scanner.nextLine();
+        if (!checkDigit(id)) {
             System.out.println("Enter correct digit!!");
             updateStudent();
             return;
         }
         Student findStudent = allStudentsHashMapID.get(Integer.parseInt(id));
-        if (findStudent!=null){
+        if (findStudent != null) {
             showStudent(findStudent);
             System.out.println("Do you want to change name?\n1.Yes\n2.No");
-            if (isChange()){
-                System.out.println("Enter New Name:");
-                String en = scanner.next();
+            if (isChange()) {
+                System.out.print("Enter New Name:");
+                String en = scanner.nextLine();
                 findStudent.setName(en);
             }
             System.out.println("Do you want to change surname?\n1.Yes\n2.No");
-            if (isChange()){
+            if (isChange()) {
                 System.out.print("Enter New Surname: ");
-                String en =  scanner.next();
+                String en = scanner.nextLine();
                 findStudent.setSurname(en);
             }
             System.out.println("Do you want to change father name?\n1.Yes\n2.No");
-            if (isChange()){
+            if (isChange()) {
                 System.out.print("Enter New Father Name: ");
-                String en =  scanner.next();
+                String en = scanner.nextLine();
                 findStudent.setFatherName(en);
             }
             System.out.println("Do you want to change email?\n1.Yes\n2.No");
-            if (isChange()){
-                String email =  "";
-                while (true){
+            if (isChange()) {
+                String email = "";
+                do {
                     System.out.print("Enter New Email: ");
-                    email =  scanner.next();
-                    if (checkEmail(email))
-                        break;
-                }
+                    email = scanner.nextLine();
+                    if (isExistEmail(email)) System.out.println("This email has already taken");
+                    if (!checkEmail(email)) System.out.println("Please, enter correct email!!!");
+
+                } while (!checkEmail(email) || isExistEmail(email));
                 findStudent.setEmail(email);
             }
             System.out.println("Do you want to change phone number?\n1.Yes\n2.No");
-            if (isChange()){
-                String phoneNumber="";
-                while (true){
+            if (isChange()) {
+                String phoneNumber = "";
+                while (true) {
                     System.out.print("Enter New phone: ");
-                    phoneNumber =  scanner.next();
+                    phoneNumber = scanner.nextLine();
                     if (checkPhoneNumber(phoneNumber))
                         break;
                 }
@@ -151,50 +169,47 @@ public class Student {
             }
             addJson();
             return;
-        }
-        else {
+        } else {
             System.out.println("There is no any student with this ID");
             updateStudent();
         }
 
     }
 
-    public void removeStudent(){
+    public void removeStudent() {
         Scanner scanner = new Scanner(System.in);
         System.out.println("Enter student id");
         String id = scanner.next();
-        if(!checkDigit(id)){
+        if (!checkDigit(id)) {
             System.out.println("Enter correct digit!!");
             removeStudent();
         }
         Student findStudent = allStudentsHashMapID.get(Integer.parseInt(id));
-        if (findStudent!=null){
+        if (findStudent != null) {
             allStudentsHashMapID.remove(Integer.parseInt(id));
             addJson();
-        }
-        else {
+        } else {
             System.out.println("There is no any student with this id!!");
             removeStudent();
         }
         return;
     }
 
-    public void searchStudent(){
+    public void searchStudent() {
         Scanner scanner = new Scanner(System.in);
         System.out.println("\n1. ID\n2. Name\n3. Father name\n4. Exit");
         String entered = scanner.nextLine();
-        if (checkDigit(entered)){
+        if (checkDigit(entered)) {
             int enteredInt = Integer.parseInt(entered);
-            switch (enteredInt){
+            switch (enteredInt) {
                 case 1:
                     System.out.println("Enter student's ID");
                     String id = scanner.nextLine();
-                    if (checkDigit(id)){
+                    if (checkDigit(id)) {
                         Student find = allStudentsHashMapID.get(Integer.parseInt(id));
-                        if (find!=null){
+                        if (find != null) {
                             showStudent(find);
-                        }
-                        else {
+                        } else {
                             System.out.println("Sorry, we cannot find student with this ID!!");
                             searchStudent();
                             return;
@@ -204,16 +219,16 @@ public class Student {
                 case 2:
                     System.out.println("Enter student's name");
                     String name = scanner.nextLine();
-                    Stream<Map.Entry<String, Student>> searchResult = allStudentsHashMapName.entrySet().stream().filter(w->w.getKey().toLowerCase().startsWith(name.toLowerCase()));
-                    long numberOf = allStudentsHashMapName.keySet().stream().filter(w->w.toLowerCase().startsWith(name.toLowerCase())).count();
-                    getStudentsForSearching(searchResult,numberOf);
+                    Stream<Map.Entry<String, Student>> searchResult = allStudentsHashMapName.entrySet().stream().filter(w -> w.getKey().toLowerCase().startsWith(name.toLowerCase()));
+                    long numberOf = allStudentsHashMapName.keySet().stream().filter(w -> w.toLowerCase().startsWith(name.toLowerCase())).count();
+                    getStudentsForSearching(searchResult, numberOf);
                     break;
                 case 3:
                     System.out.println("Enter student's father name");
                     String fatherName = scanner.nextLine();
-                    Stream<Map.Entry<String, Student>> searchRes = allStudentsHashMapFather.entrySet().stream().filter(w->w.getKey().toLowerCase().startsWith(fatherName.toLowerCase()));
-                    long numOf = allStudentsHashMapFather.keySet().stream().filter(w->w.toLowerCase().startsWith(fatherName.toLowerCase())).count();
-                    getStudentsForSearching(searchRes,numOf);
+                    Stream<Map.Entry<String, Student>> searchRes = allStudentsHashMapFather.entrySet().stream().filter(w -> w.getKey().toLowerCase().startsWith(fatherName.toLowerCase()));
+                    long numOf = allStudentsHashMapFather.keySet().stream().filter(w -> w.toLowerCase().startsWith(fatherName.toLowerCase())).count();
+                    getStudentsForSearching(searchRes, numOf);
                     break;
                 case 4:
                     return;
@@ -224,37 +239,36 @@ public class Student {
         }
     }
 
-    public void getStudentsForSearching(Stream<Map.Entry<String, Student>> searchResult,long numberOf){
-        if (numberOf!=0){
-            for (Map.Entry<String, Student> ss: searchResult.collect(Collectors.toList())){
+    public void getStudentsForSearching(Stream<Map.Entry<String, Student>> searchResult, long numberOf) {
+        if (numberOf != 0) {
+            for (Map.Entry<String, Student> ss : searchResult.collect(Collectors.toList())) {
                 System.out.println("-------------");
                 System.out.println(ss.getValue().toString());
             }
-        }
-        else {
+        } else {
             System.out.println("Sorry, we cannot find student with this name!!");
         }
     }
 
-    public void showStudents(){
-        for(Student st: allStudentsHashMapID.values()){
+    public void showStudents() {
+        for (Student st : allStudentsHashMapID.values()) {
             System.out.println("-----------------");
             System.out.println(st.toString());
         }
     }
 
-    public void showStudent(Student st){
+    public void showStudent(Student st) {
         System.out.println(st.toString());
     }
 
-    public void addJson(){
+    public void addJson() {
         School school = new School();
         school.setStudents(allStudentsHashMapID);
         allStudentsHashMapName.clear();
         allStudentsHashMapFather.clear();
-        for (Student st: allStudentsHashMapID.values()){
-            allStudentsHashMapName.put((st.getName()+st.getId()),st);
-            allStudentsHashMapFather.put((st.getFatherName()+st.getId()),st);
+        for (Student st : allStudentsHashMapID.values()) {
+            allStudentsHashMapName.put((st.getName() + st.getId()), st);
+            allStudentsHashMapFather.put((st.getFatherName() + st.getId()), st);
         }
         Gson gson = new GsonBuilder().setPrettyPrinting().create();
         try (FileWriter writer = new FileWriter("studentJson.json")) {
@@ -266,69 +280,61 @@ public class Student {
 
     boolean isChangeOrNot;
 
-    boolean isChange(){
+    boolean isChange() {
         Scanner scanner = new Scanner(System.in);
         String entered = scanner.nextLine();
-        if (!checkDigit(entered)){
+        if (!checkDigit(entered)) {
             System.out.println("Please, enter correct option!!");
             isChange();
-            if (isChangeOrNot){
+            if (isChangeOrNot) {
                 return true;
-            }
-            else return false;
-        }
-        else {
+            } else return false;
+        } else {
             int enteredInt = Integer.parseInt(entered);
-            if (enteredInt==1){
+            if (enteredInt == 1) {
                 isChangeOrNot = true;
                 return true;
-            }else if(enteredInt==2){
+            } else if (enteredInt == 2) {
                 isChangeOrNot = false;
                 return false;
-            }
-            else {
+            } else {
                 System.out.println("Please, enter correct option!!");
                 isChange();
-                if (isChangeOrNot){
+                if (isChangeOrNot) {
                     return true;
-                }
-                else return false;
+                } else return false;
             }
         }
     }
 
-    boolean checkDigit(String scan){
+    boolean checkDigit(String scan) {
         Pattern pattern = Pattern.compile("[0-9]+");
         Matcher matcher = pattern.matcher(scan);
-        if (scan.length()<9&&matcher.matches()==true){
+        if (scan.length() < 9 && matcher.matches() == true) {
             return true;
         }
         return false;
     }
 
-    int getRandomId(){
-        int rId = (int)(Math.random()*100000);
+    int getRandomId() {
+        int rId = (int) (Math.random() * 100000);
         boolean isExist = allStudentsHashMapID.containsKey(rId);
-        if(isExist){
+        if (isExist) {
             getRandomId();
         }
         return rId;
     }
 
-    boolean checkEmail(String email){
+    boolean checkEmail(String email) {
         Pattern pattern = Pattern.compile("[a-zA-z|\\\\.|\\d]+@[a-zA-Z|]+[.][a-zA-Z]+");
         Matcher matcher = pattern.matcher(email);
-        if (!matcher.matches()){
-            System.out.println("Please, enter correct email!!!");
-            return matcher.matches();
-        }
         return matcher.matches();
     }
 
-    boolean checkPhoneNumber(String phoneNumber){
+    boolean checkPhoneNumber(String phoneNumber) {
         Pattern pattern = Pattern.compile("[+]{1}[9]{2}[4]{1}(([5]([0]|[1]|[5]))|([7]([0]|[7]))|([9]([9])))[1-9][0-9]{6}");
         Matcher matcher = pattern.matcher(phoneNumber);
-        if (!matcher.matches()){
+        if (!matcher.matches()) {
             System.out.println("Please, enter phone number (Ex: +994(50/51/55/70/77/99)6705569)!!!");
             return matcher.matches();
         }
