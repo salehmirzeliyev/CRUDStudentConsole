@@ -45,7 +45,7 @@ public class Main {
                         forSearch.searchStudent();
                         break;
                     case 6:
-                        return;
+                        System.exit(0);
                     default:
                 }
             }
