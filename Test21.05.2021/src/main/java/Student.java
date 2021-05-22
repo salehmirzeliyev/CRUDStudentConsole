@@ -8,6 +8,7 @@ import lombok.Data;
 
 import javax.swing.text.html.Option;
 import java.io.*;
+import java.lang.invoke.StringConcatFactory;
 import java.lang.reflect.Type;
 import java.util.*;
 import java.util.regex.Matcher;
@@ -64,14 +65,11 @@ public class Student {
         }
     }
 
-    public  void createStudent(){
+    public void createStudent(){
         Scanner sc = new Scanner(System.in);
-        System.out.print("Please, enter student name: ");
-        String name = sc.nextLine();
-        System.out.print("Please, enter student surname: ");
-        String surname = sc.nextLine();
-        System.out.print("Please, enter student father name: ");
-        String fatherName = sc.nextLine();
+        String name = getStringInput("Please, enter student name:");
+        String surname = getStringInput("Please, enter student surname:");
+        String fatherName = getStringInput("Please, enter student father name:");
         String email="";
         while (true){
             System.out.print("Please, enter student email: ");
@@ -95,6 +93,16 @@ public class Student {
         System.out.print("Student: information");
         showStudent(newStudent);
         return;
+    }
+
+    public static String getStringInput(String text){
+        String myInput;
+        do {
+            Scanner sc = new Scanner(System.in);
+            System.out.print(text);
+            myInput=sc.nextLine();
+        }while (myInput.length()==0);
+        return myInput;
     }
 
     public void updateStudent(){
