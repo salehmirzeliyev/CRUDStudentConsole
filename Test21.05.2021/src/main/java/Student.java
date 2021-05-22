@@ -79,8 +79,14 @@ public class Student {
             if (checkEmail(email))
                 break;
         }
-        System.out.print("Please, enter student phone number: ");
-        String phoneNumber = sc.nextLine();
+
+        String phoneNumber="";
+        while (true){
+            System.out.print("Please, enter student phone number: ");
+            phoneNumber =  sc.nextLine();
+            if (checkPhoneNumber(phoneNumber))
+                break;
+        }
         Student newStudent = new Student(getRandomId(),name,surname,fatherName,email,phoneNumber);
         allStudentsHashMapName.put((newStudent.getName()+newStudent.getId()),newStudent);
         allStudentsHashMapID.put((newStudent.getId()),newStudent);
@@ -124,14 +130,26 @@ public class Student {
             System.out.println("Do you want to change email?\n1.Yes\n2.No");
             if (isChange()){
                 System.out.print("Enter New Email: ");
-                String en =  scanner.next();
-                findStudent.setEmail(en);
+                String email =  "";
+                while (true){
+                    System.out.print("Please, enter student email: ");
+                    email =  scanner.next();
+                    if (checkEmail(email))
+                        break;
+                }
+                findStudent.setEmail(email);
             }
             System.out.println("Do you want to change phone number?\n1.Yes\n2.No");
             if (isChange()){
                 System.out.print("Enter New phone: ");
-                String en =  scanner.next();
-                findStudent.setPhoneNumber(en);
+                String phoneNumber="";
+                while (true){
+                    System.out.print("Please, enter student phone number: ");
+                    phoneNumber =  scanner.next();
+                    if (checkPhoneNumber(phoneNumber))
+                        break;
+                }
+                findStudent.setPhoneNumber(phoneNumber);
             }
             addJson();
             return;
@@ -298,10 +316,20 @@ public class Student {
     }
 
     boolean checkEmail(String email){
-        Pattern pattern = Pattern.compile("[a-zA-z|\\\\.|\\d]+@[a-zA-Z|\\\\.]+|[a-zA-Z]");
+        Pattern pattern = Pattern.compile("[a-zA-z|\\\\.|\\d]+@[a-zA-Z|]+[.][a-zA-Z]+");
         Matcher matcher = pattern.matcher(email);
         if (!matcher.matches()){
             System.out.println("Please, enter correct email!!!");
+            return matcher.matches();
+        }
+        return matcher.matches();
+    }
+
+    boolean checkPhoneNumber(String phoneNumber){
+        Pattern pattern = Pattern.compile("[+]{1}[9]{2}[4]{1}(([5]([0]|[1]|[5]))|([7]([0]|[7]))|([9]([9])))[1-9][0-9]{6}");
+        Matcher matcher = pattern.matcher(phoneNumber);
+        if (!matcher.matches()){
+            System.out.println("Please, enter phone number (Ex: +994(50/51/55/70/77/99)6705569)!!!");
             return matcher.matches();
         }
         return matcher.matches();
